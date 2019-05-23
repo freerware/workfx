@@ -66,8 +66,8 @@ type SQLUnitParameters struct {
 	Inserters map[work.TypeName]work.Inserter
 	Updaters  map[work.TypeName]work.Updater
 	Deleters  map[work.TypeName]work.Deleter
-	Logger    *zap.Logger
-	DB        *sql.DB `name:"rwDB"`
+	Logger    *zap.Logger `optional:"true"`
+	DB        *sql.DB     `name:"rwDB"`
 }
 
 // UnitParameters encapsulates the various dependencies
@@ -79,7 +79,7 @@ type UnitParameters struct {
 	Inserters map[work.TypeName]work.Inserter
 	Updaters  map[work.TypeName]work.Updater
 	Deleters  map[work.TypeName]work.Deleter
-	Logger    *zap.Logger
+	Logger    *zap.Logger `optional:"true"`
 }
 
 // SQLWorkUniterResult defines the SQL work uniter to be

@@ -2,12 +2,39 @@
 
 
 [[projects]]
+  digest = "1:ffe9824d294da03b391f44e1ae8281281b4afc1bdaa9588c9097785e3af10cec"
+  name = "github.com/davecgh/go-spew"
+  packages = ["spew"]
+  pruneopts = "UT"
+  revision = "8991bc29aa16c548c550c7ff78260e27b9ab7c73"
+  version = "v1.1.1"
+
+[[projects]]
   branch = "master"
   digest = "1:2e7384ccb5b31e5b0baec252e9e7f63eb3d4841bb869edfdd935a74bc2a62b62"
   name = "github.com/freerware/work"
   packages = ["."]
   pruneopts = "UT"
   revision = "9ada2a8cb9d81fe3fb58c8162fa96c738a3f772b"
+
+[[projects]]
+  digest = "1:0028cb19b2e4c3112225cd871870f2d9cf49b9b4276531f03438a88e94be86fe"
+  name = "github.com/pmezard/go-difflib"
+  packages = ["difflib"]
+  pruneopts = "UT"
+  revision = "792786c7400a136282c1664665ae0a8db921c6c2"
+  version = "v1.0.0"
+
+[[projects]]
+  digest = "1:5da8ce674952566deae4dbc23d07c85caafc6cfa815b0b3e03e41979cedb8750"
+  name = "github.com/stretchr/testify"
+  packages = [
+    "assert",
+    "require",
+  ]
+  pruneopts = "UT"
+  revision = "ffdc059bfe9ce6a4e144ba849dbedead332c6053"
+  version = "v1.3.0"
 
 [[projects]]
   digest = "1:ff6b126259880858441d0a43e63c3f2f9071601415e1f34a7f053f90cbef8464"
@@ -30,10 +57,11 @@
   version = "v1.7.0"
 
 [[projects]]
-  digest = "1:74e59bc785a76b467b9a5c0353193e8befa0c27863413e5fc52e87cf3d24fa4e"
+  digest = "1:9eaa7eeb162a91d1027838e1c12802acdbc72e9962e3043cc4a3e02ad7f3f205"
   name = "go.uber.org/fx"
   packages = [
     ".",
+    "fxtest",
     "internal/fxlog",
     "internal/fxreflect",
     "internal/lifecycle",
@@ -70,7 +98,9 @@
   analyzer-version = 1
   input-imports = [
     "github.com/freerware/work",
+    "github.com/stretchr/testify/require",
     "go.uber.org/fx",
+    "go.uber.org/fx/fxtest",
     "go.uber.org/zap",
   ]
   solver-name = "gps-cdcl"
