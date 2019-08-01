@@ -10,12 +10,12 @@
   version = "v1.1.1"
 
 [[projects]]
-  digest = "1:94c8b086b1f2a311ccabe6a18ceefcfed5b78a7a963f38d4be69e6eff0687c22"
+  digest = "1:ba572f88667ea6147a1299e0aefd283572d69ee26705d68454a41954b49e7efb"
   name = "github.com/freerware/work"
   packages = ["."]
   pruneopts = "UT"
-  revision = "4106889a0bddfd8d5c179be331c022ab510aae1f"
-  version = "v1.0.0"
+  revision = "28cf44e13d2a2e6b568462b80b8a4fc5e1e0c17a"
+  version = "v2.0.0"
 
 [[projects]]
   digest = "1:0028cb19b2e4c3112225cd871870f2d9cf49b9b4276531f03438a88e94be86fe"
@@ -37,12 +37,20 @@
   version = "v1.3.0"
 
 [[projects]]
-  digest = "1:ff6b126259880858441d0a43e63c3f2f9071601415e1f34a7f053f90cbef8464"
+  digest = "1:fdcd00d11e3c9d307f82e2cc8cd84fe8974ccc3053c2126be5553a38eb565760"
+  name = "github.com/uber-go/tally"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "f266f90e9c4d5894364039a324a05d061f2f34e2"
+  version = "v3.3.11"
+
+[[projects]]
+  digest = "1:a5158647b553c61877aa9ae74f4015000294e47981e6b8b07525edcbb0747c81"
   name = "go.uber.org/atomic"
   packages = ["."]
   pruneopts = "UT"
-  revision = "3b8db5e93c4c02efbc313e17b2e796b0914a01fb"
-  version = "v1.1.0"
+  revision = "df976f2515e274675050de7b3f42545de80594fd"
+  version = "v1.4.0"
 
 [[projects]]
   digest = "1:2773e4e922e5af534775962ffef08770b8114e177590f7605886528d37417105"
@@ -99,6 +107,7 @@
   input-imports = [
     "github.com/freerware/work",
     "github.com/stretchr/testify/require",
+    "github.com/uber-go/tally",
     "go.uber.org/fx",
     "go.uber.org/fx/fxtest",
     "go.uber.org/zap",

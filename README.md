@@ -5,7 +5,7 @@
 
 ## What is it?
 
-`workfx` empowers your [Fx](https://github.com/uber-go/fx) application with the ability to track and commit atomic changes to your entities. It essentially defines a core set of Fx modules that can be imported into your Fx application so that it can leverage [`work.Uniter`](https://github.com/freerware/work/blob/master/uniter.go) instances.
+`workfx` empowers your [Fx][fx] application with the ability to track and commit atomic changes to your entities. It essentially defines a core set of Fx modules that can be imported into your Fx application so that it can leverage [`work.Uniter`][uniter-doc] instances.
 
 ## Why use it?
 
@@ -18,7 +18,7 @@ With `workfx`, you can seamlessly integrate work units into your Fx application.
 
 ### Provide the Module
 
-```golang
+```go
 package main
 
 import (
@@ -44,7 +44,7 @@ To support Fx applications that may leverage more than one work unit type, `work
 | `bestEffortWorkUniter` | `work.Uniter` | Best Effort Uniter |
 | `rwDB`                 | `*sql.DB`     | Read-Write DB      |
 
-```golang
+```go
 type Parameters struct {
 	fx.In
 
@@ -60,7 +60,7 @@ In addition to named values, `workfx` also makes use of value groups as a conven
 | ---------------------- | ------------- | ----------------- |
 | `workUniter`           | `work.Uniter` | Work Uniter Group |
 
-```golang
+```go
 type Parameters struct {
 	fx.In
 
@@ -68,6 +68,8 @@ type Parameters struct {
 }
 ```
 
+[fx]: https://github.com/uber-go/fx
+[uniter-doc]: https://godoc.org/github.com/freerware/work#Uniter
 [doc-img]: https://godoc.org/github.com/freerware/workfx?status.svg
 [doc]: https://godoc.org/github.com/freerware/workfx
 [ci-img]: https://travis-ci.org/freerware/workfx.svg?branch=master

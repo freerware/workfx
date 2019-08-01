@@ -6,8 +6,10 @@ import (
 
 	"github.com/freerware/work"
 	"github.com/stretchr/testify/require"
+	"github.com/uber-go/tally"
 	"go.uber.org/fx"
 	"go.uber.org/fx/fxtest"
+	"go.uber.org/zap"
 )
 
 type dataMapper struct{}
@@ -16,16 +18,13 @@ func (dm dataMapper) Insert(e ...interface{}) error { return nil }
 func (dm dataMapper) Update(e ...interface{}) error { return nil }
 func (dm dataMapper) Delete(e ...interface{}) error { return nil }
 
+type sqlDataMapper struct{}
+
+func (dm sqlDataMapper) Insert(tx *sql.Tx, e ...interface{}) error { return nil }
+func (dm sqlDataMapper) Update(tx *sql.Tx, e ...interface{}) error { return nil }
+func (dm sqlDataMapper) Delete(tx *sql.Tx, e ...interface{}) error { return nil }
+
 type entity struct{}
-
-type result struct {
-	fx.Out
-
-	Inserters map[work.TypeName]work.Inserter
-	Updaters  map[work.TypeName]work.Updater
-	Deleters  map[work.TypeName]work.Deleter
-	DB        *sql.DB `name:"rwDB"`
-}
 
 type sqlUniterParameters struct {
 	fx.In
@@ -42,20 +41,29 @@ type bestEffortUniterParameters struct {
 func TestSQLUnitModule(t *testing.T) {
 
 	//arrange.
-	unitDeps := func() result {
-		inserters := make(map[work.TypeName]work.Inserter)
-		updaters := make(map[work.TypeName]work.Updater)
-		deleters := make(map[work.TypeName]work.Deleter)
+	type result struct {
+		fx.Out
 
-		dm := dataMapper{}
+		Mappers map[work.TypeName]work.SQLDataMapper
+		DB      *sql.DB `name:"rwDB"`
+		Logger  *zap.Logger
+		Scope   tally.Scope
+	}
+
+	unitDeps := func() result {
+		mappers := make(map[work.TypeName]work.SQLDataMapper)
+
+		dm := sqlDataMapper{}
 		t := work.TypeNameOf(entity{})
-		inserters[t], updaters[t], deleters[t] = &dm, &dm, &dm
+		mappers[t] = &dm
 		var db *sql.DB
+		l := zap.NewExample()
+		s := tally.NewTestScope("test", map[string]string{})
 		return result{
-			Inserters: inserters,
-			Updaters:  updaters,
-			Deleters:  deleters,
-			DB:        db,
+			Mappers: mappers,
+			DB:      db,
+			Logger:  l,
+			Scope:   s,
 		}
 	}
 	var uniter *work.Uniter
@@ -77,20 +85,25 @@ func TestSQLUnitModule(t *testing.T) {
 func TestBestEffortUnit(t *testing.T) {
 
 	//arrange.
+	type result struct {
+		fx.Out
+
+		Mappers map[work.TypeName]work.DataMapper
+		Logger  *zap.Logger
+		Scope   tally.Scope
+	}
 	unitDeps := func() result {
-		inserters := make(map[work.TypeName]work.Inserter)
-		updaters := make(map[work.TypeName]work.Updater)
-		deleters := make(map[work.TypeName]work.Deleter)
+		mappers := make(map[work.TypeName]work.DataMapper)
 
 		dm := dataMapper{}
 		t := work.TypeNameOf(entity{})
-		inserters[t], updaters[t], deleters[t] = &dm, &dm, &dm
-		var db *sql.DB
+		mappers[t] = &dm
+		l := zap.NewExample()
+		s := tally.NewTestScope("test", map[string]string{})
 		return result{
-			Inserters: inserters,
-			Updaters:  updaters,
-			Deleters:  deleters,
-			DB:        db,
+			Mappers: mappers,
+			Logger:  l,
+			Scope:   s,
 		}
 	}
 	var uniter *work.Uniter
@@ -112,21 +125,35 @@ func TestBestEffortUnit(t *testing.T) {
 func TestSQLUnitAndBestEffortUnit(t *testing.T) {
 
 	//arrange.
-	unitDeps := func() result {
-		inserters := make(map[work.TypeName]work.Inserter)
-		updaters := make(map[work.TypeName]work.Updater)
-		deleters := make(map[work.TypeName]work.Deleter)
+	type sResult struct {
+		fx.Out
 
+		Mappers map[work.TypeName]work.SQLDataMapper
+		DB      *sql.DB `name:"rwDB"`
+		Logger  *zap.Logger
+		Scope   tally.Scope
+	}
+
+	type bResult struct {
+		fx.Out
+
+		Mappers map[work.TypeName]work.DataMapper
+	}
+
+	unitDeps := func() (sResult, bResult) {
+		sqlMappers := make(map[work.TypeName]work.SQLDataMapper)
+		mappers := make(map[work.TypeName]work.DataMapper)
+
+		sdm := sqlDataMapper{}
 		dm := dataMapper{}
 		t := work.TypeNameOf(entity{})
-		inserters[t], updaters[t], deleters[t] = &dm, &dm, &dm
+		sqlMappers[t] = &sdm
+		mappers[t] = &dm
 		var db *sql.DB
-		return result{
-			Inserters: inserters,
-			Updaters:  updaters,
-			Deleters:  deleters,
-			DB:        db,
-		}
+		l := zap.NewExample()
+		s := tally.NewTestScope("test", map[string]string{})
+		return sResult{Mappers: sqlMappers, DB: db, Logger: l, Scope: s},
+			bResult{Mappers: mappers}
 	}
 	var sql *work.Uniter
 	var bestEffort *work.Uniter
