@@ -19,6 +19,7 @@ import (
 	"database/sql"
 
 	"github.com/freerware/work"
+	"github.com/uber-go/tally"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
 )
@@ -30,30 +31,29 @@ var Modules = struct {
 }{
 	SQLUnit: fx.Options(
 		fx.Provide(func(p SQLUnitParameters) SQLWorkUniterResult {
-			params := work.SQLUnitParameters{
-				UnitParameters: work.UnitParameters{
-					Inserters: p.Inserters,
-					Updaters:  p.Updaters,
-					Deleters:  p.Deleters,
-					Logger:    p.Logger,
-				},
-				ConnectionPool: p.DB,
+			options := []work.Option{}
+			if p.Logger != nil {
+				options = append(options, work.UnitLogger(p.Logger))
+			}
+			if p.Scope != nil {
+				options = append(options, work.UnitScope(p.Scope))
 			}
 			return SQLWorkUniterResult{
-				WorkUniter: work.NewSQLUniter(params),
+				WorkUniter: work.NewSQLUniter(p.Mappers, p.DB, options...),
 			}
 		})),
 
 	BestEffortUnit: fx.Options(
 		fx.Provide(func(p UnitParameters) BestEffortWorkUniterResult {
-			params := work.UnitParameters{
-				Inserters: p.Inserters,
-				Updaters:  p.Updaters,
-				Deleters:  p.Deleters,
-				Logger:    p.Logger,
+			options := []work.Option{}
+			if p.Logger != nil {
+				options = append(options, work.UnitLogger(p.Logger))
+			}
+			if p.Scope != nil {
+				options = append(options, work.UnitScope(p.Scope))
 			}
 			return BestEffortWorkUniterResult{
-				WorkUniter: work.NewBestEffortUniter(params),
+				WorkUniter: work.NewBestEffortUniter(p.Mappers, options...),
 			}
 		})),
 }
@@ -63,11 +63,10 @@ var Modules = struct {
 type SQLUnitParameters struct {
 	fx.In
 
-	Inserters map[work.TypeName]work.Inserter
-	Updaters  map[work.TypeName]work.Updater
-	Deleters  map[work.TypeName]work.Deleter
-	Logger    *zap.Logger `optional:"true"`
-	DB        *sql.DB     `name:"rwDB"`
+	Mappers map[work.TypeName]work.SQLDataMapper
+	DB      *sql.DB     `name:"rwDB"`
+	Logger  *zap.Logger `optional:"true"`
+	Scope   tally.Scope `optional:"true"`
 }
 
 // UnitParameters encapsulates the various dependencies
@@ -76,10 +75,9 @@ type SQLUnitParameters struct {
 type UnitParameters struct {
 	fx.In
 
-	Inserters map[work.TypeName]work.Inserter
-	Updaters  map[work.TypeName]work.Updater
-	Deleters  map[work.TypeName]work.Deleter
-	Logger    *zap.Logger `optional:"true"`
+	Mappers map[work.TypeName]work.DataMapper
+	Logger  *zap.Logger `optional:"true"`
+	Scope   tally.Scope `optional:"true"`
 }
 
 // SQLWorkUniterResult defines the SQL work uniter to be
