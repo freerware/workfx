@@ -10,12 +10,12 @@
   version = "v1.1.1"
 
 [[projects]]
-  digest = "1:ba572f88667ea6147a1299e0aefd283572d69ee26705d68454a41954b49e7efb"
+  digest = "1:c45b476cb9555e42e02bed094a7b2bc022bd3b50663180d4516f37151e83db7f"
   name = "github.com/freerware/work"
   packages = ["."]
   pruneopts = "UT"
-  revision = "28cf44e13d2a2e6b568462b80b8a4fc5e1e0c17a"
-  version = "v2.0.0"
+  revision = "f3d43e21363237c15f89ae390d51cf188a00ba94"
+  version = "v2.0.1"
 
 [[projects]]
   digest = "1:0028cb19b2e4c3112225cd871870f2d9cf49b9b4276531f03438a88e94be86fe"
