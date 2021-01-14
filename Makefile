@@ -1,12 +1,22 @@
 all: bins
 
 clean:
-	go clean -x
-	rm -r --force vendor/
+	@echo cleaning...
+	@GO111MODULE=on go clean -x
+	@echo done!
 
 bins:
-	dep ensure -v
-	go build
+	@echo building...
+	@#v1 + v2
+	@GO111MODULE=on go build github.com/freerware/workfx
+	@#v4
+	@cd ./v4 && GO111MODULE=on go build github.com/freerware/workfx/v4 && cd ..
+	@echo done!
 
 test: bins
-	go test -v -covermode=count -coverprofile=coverage.out
+	@echo testing...
+	@#v1 + v2
+	@GO111MODULE=on go test -v -race -covermode=atomic -coverprofile=coverage.out github.com/freerware/workfx
+	@#v4
+	@cd ./v4 && GO111MODULE=on go test -v -race -covermode=atomic -coverprofile=coverage.out github.com/freerware/workfx/v4 && cd ..
+	@echo done!
