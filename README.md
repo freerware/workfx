@@ -75,3 +75,4 @@ Please check out our [code of conduct][code-of-conduct] to get up to speed how w
 [modules-doc]: https://golang.org/doc/go1.11#modules
 [modules-wiki]: https://github.com/golang/go/wiki/Modules#releasing-modules-v2-or-higher
 [modules-release]: https://github.com/freerware/workfx/releases/tag/v4.0.0-beta
+[dep]: https://golang.github.io/dep/
