@@ -16,19 +16,14 @@
 package workfx
 
 import (
-	"database/sql"
-	"time"
-
 	"github.com/freerware/work/v4/unit"
-	"github.com/uber-go/tally"
 	"go.uber.org/fx"
-	"go.uber.org/zap"
 )
 
 // Module is the Fx module necessary to enable an Fx application with work units.
 var Module = fx.Option(
 	fx.Provide(func(p Parameters) Result {
-		return Result{Uniter: unit.NewUniter(p.AsOptions()...)}
+		return Result{Uniter: unit.NewUniter(p.Options...)}
 	}),
 )
 
@@ -36,39 +31,7 @@ var Module = fx.Option(
 type Parameters struct {
 	fx.In
 
-	Mappers                      map[unit.TypeName]unit.DataMapper
-	Logger                       *zap.Logger                       `optional:"true"`
-	Scope                        tally.Scope                       `optional:"true"`
-	DB                           *sql.DB                           `name:"rwDB",optional:"true"`
-	Actions                      map[unit.ActionType][]unit.Action `optional:"true"`
-	DisableDefaultLoggingActions bool                              `name:"disableDefaultUnitLoggingActions",optional:"true"`
-	RetryAttempts                int                               `name:"unitRetryAttempts",optional:"true"`
-	RetryDelay                   time.Duration                     `name:"unitRetryDelay",optional:"true"`
-	RetryMaximumJitter           time.Duration                     `name:"unitRetryMaximumJitter",optional:"true"`
-	RetryType                    unit.RetryType                    `optional:"true"`
-}
-
-func (p Parameters) appendOption(options []unit.Option, param interface{}, option unit.Option) []unit.Option {
-	if param == nil {
-		return options
-	}
-	return append(options, option)
-}
-
-func (p Parameters) AsOptions() (opts []unit.Option) {
-	opts = p.appendOption(opts, p.Mappers, unit.DataMappers(p.Mappers))
-	opts = p.appendOption(opts, p.Logger, unit.Logger(p.Logger))
-	opts = p.appendOption(opts, p.Scope, unit.Scope(p.Scope))
-	opts = p.appendOption(opts, p.DB, unit.DB(p.DB))
-	opts = p.appendOption(opts, p.Actions, unit.Actions(p.Actions))
-	opts = p.appendOption(opts, p.RetryAttempts, unit.RetryAttempts(p.RetryAttempts))
-	opts = p.appendOption(opts, p.RetryDelay, unit.RetryDelay(p.RetryDelay))
-	opts = p.appendOption(opts, p.RetryMaximumJitter, unit.RetryMaximumJitter(p.RetryMaximumJitter))
-	opts = p.appendOption(opts, p.RetryType, unit.RetryType(p.RetryType))
-	if p.DisableDefaultLoggingActions {
-		opts = p.appendOption(opts, p.DisableDefaultLoggingActions, unit.DisableDefaultLoggingActions())
-	}
-	return
+	Options []unit.Option `group:"unitOptions"`
 }
 
 // Result defines the uniter to be provided to the Fx application.

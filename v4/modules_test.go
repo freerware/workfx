@@ -27,10 +27,10 @@ func (dm dataMapper) Delete(ctx context.Context, mCtx unit.MapperContext, e ...i
 
 type entity struct{}
 
-type UniterParameters struct {
+type Parameters struct {
 	fx.In
 
-	Uniter unit.Uniter `name:"bestEffortWorkUniter"`
+	Uniter unit.Uniter `name:"uniter"`
 }
 
 func TestModule(t *testing.T) {
@@ -38,22 +38,22 @@ func TestModule(t *testing.T) {
 	type result struct {
 		fx.Out
 
-		Mappers map[unit.TypeName]unit.DataMapper
-		Logger  *zap.Logger
-		Scope   tally.Scope
+		Options []unit.Option `name:"unitOptions"`
 	}
+
 	unitDeps := func() result {
 		mappers := make(map[unit.TypeName]unit.DataMapper)
-
 		dm := dataMapper{}
 		t := unit.TypeNameOf(entity{})
 		mappers[t] = &dm
 		l := zap.NewExample()
 		s := tally.NewTestScope("test", map[string]string{})
 		return result{
-			Mappers: mappers,
-			Logger:  l,
-			Scope:   s,
+			Options: []unit.Option{
+				unit.DataMappers(mappers),
+				unit.Logger(l),
+				unit.Scope(s),
+			},
 		}
 	}
 	var uniter *unit.Uniter
@@ -63,7 +63,7 @@ func TestModule(t *testing.T) {
 		t,
 		fx.Provide(unitDeps),
 		workfx.Module,
-		fx.Invoke(func(p UniterParameters) {
+		fx.Invoke(func(p Parameters) {
 			uniter = &p.Uniter
 		}),
 	).RequireStart().RequireStop()
