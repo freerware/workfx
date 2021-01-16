@@ -4,7 +4,7 @@ go 1.15
 
 require (
 	github.com/DATA-DOG/go-sqlmock v1.5.0 // indirect
-	github.com/freerware/work/v4 v4.0.0-20210114044553-b49c37315d46
+	github.com/freerware/work/v4 v4.0.0-beta
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/stretchr/testify v1.4.0
 	github.com/uber-go/tally v3.3.13+incompatible

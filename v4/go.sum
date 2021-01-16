@@ -8,8 +8,8 @@ github.com/avast/retry-go v3.0.0+incompatible/go.mod h1:XtSnn+n/sHqQIpZ10K1qAevB
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/freerware/work/v4 v4.0.0-20210114044553-b49c37315d46 h1:Sxpy032Yu1vqeRTng2v+ejRgo6z8QZY6Bsk5uhLSah4=
-github.com/freerware/work/v4 v4.0.0-20210114044553-b49c37315d46/go.mod h1:Cdv4PmSy0zXjZrOC0gaXIlbglkP91XVdWj1MXiQy204=
+github.com/freerware/work/v4 v4.0.0-beta h1:3o/+BYqNy9iUPi24Lbb+m+xrRn2bjAIa4hg3rus+K2E=
+github.com/freerware/work/v4 v4.0.0-beta/go.mod h1:Cdv4PmSy0zXjZrOC0gaXIlbglkP91XVdWj1MXiQy204=
 github.com/freerware/workfx v1.0.0 h1:ao3RbzH1LVr7Dr8+1jImWxfgyMW7O/csW79iXaPfZ+I=
 github.com/freerware/workfx v2.0.1+incompatible h1:1wM7QJJkex/FpkgGJ8b4/OmJrF2hQBSaU69ViwZVAZQ=
 github.com/golang/mock v1.4.4 h1:l75CXGRSwbaYNpl/Z2X1XIIAMSCquvXgpVZDhwEIJsc=
