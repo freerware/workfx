@@ -29,6 +29,9 @@ application with one line of code.
 
 - NO LONGER SUPPORTED.
 
+> Versions `1.x.x` and `2.x.x` are no longer supported. Please upgrade to
+`4.x.x+` to receive the latest and greatest features of work units!
+
 ## Dependancy Information
 
 As of [`v4.0.0-beta`][modules-release], the project utilizes [modules][modules-doc].
@@ -36,11 +39,6 @@ Prior to `v4.0.0-beta`, the project utilized [`dep`][dep] for dependency managem
 
 In order to transition to modules gracefully, we adhered to the
 [best practice recommendations][modules-wiki] authored by the Golang team.
-
-## Release information
-
-Versions `1.x.x` and `2.x.x` are no longer supported. Please upgrade to
-`4.x.x+` to receive the latest and greatest features of work units!
 
 ## Contribute
 
