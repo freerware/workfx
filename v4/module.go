@@ -25,14 +25,14 @@ import (
 	"go.uber.org/zap"
 )
 
+// Module is the Fx module necessary to enable an Fx application with work units.
 var Module = fx.Option(
 	fx.Provide(func(p Parameters) Result {
 		return Result{Uniter: unit.NewUniter(p.AsOptions()...)}
 	}),
 )
 
-// UnitParameters encapsulates the various dependencies
-// required to contruct work units.
+// UnitParameters encapsulates the various dependencies required to contruct work units.
 type Parameters struct {
 	fx.In
 
@@ -52,7 +52,7 @@ func (p Parameters) appendOption(options []unit.Option, param interface{}, optio
 	if param == nil {
 		return options
 	}
-	append(options, option)
+	return append(options, option)
 }
 
 func (p Parameters) AsOptions() (opts []unit.Option) {
@@ -61,16 +61,17 @@ func (p Parameters) AsOptions() (opts []unit.Option) {
 	opts = p.appendOption(opts, p.Scope, unit.Scope(p.Scope))
 	opts = p.appendOption(opts, p.DB, unit.DB(p.DB))
 	opts = p.appendOption(opts, p.Actions, unit.Actions(p.Actions))
-	opts = p.appendOption(opts, p.DisableDefaultLoggingActions, unit.DisableDefaultLoggingActions(p.DisableDefaultLoggingActions))
 	opts = p.appendOption(opts, p.RetryAttempts, unit.RetryAttempts(p.RetryAttempts))
 	opts = p.appendOption(opts, p.RetryDelay, unit.RetryDelay(p.RetryDelay))
 	opts = p.appendOption(opts, p.RetryMaximumJitter, unit.RetryMaximumJitter(p.RetryMaximumJitter))
 	opts = p.appendOption(opts, p.RetryType, unit.RetryType(p.RetryType))
+	if p.DisableDefaultLoggingActions {
+		opts = p.appendOption(opts, p.DisableDefaultLoggingActions, unit.DisableDefaultLoggingActions())
+	}
 	return
 }
 
-// BestEffortWorkUniterResult defines the best effort uniter
-// to be provided to the dependency injection container.
+// Result defines the uniter to be provided to the Fx application.
 type Result struct {
 	fx.Out
 
