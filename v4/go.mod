@@ -1,4 +1,4 @@
-module github.com/workfx/v4
+module github.com/freerware/workfx/v4
 
 go 1.15
 

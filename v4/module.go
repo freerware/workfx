@@ -38,5 +38,5 @@ type Parameters struct {
 type Result struct {
 	fx.Out
 
-	Uniter unit.Uniter `group:"uniter"`
+	Uniter unit.Uniter `name:"uniter"`
 }

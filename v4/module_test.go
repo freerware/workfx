@@ -20,9 +20,9 @@ import (
 	"testing"
 
 	"github.com/freerware/work/v4/unit"
+	"github.com/freerware/workfx/v4"
 	"github.com/stretchr/testify/require"
 	"github.com/uber-go/tally"
-	"github.com/workfx/v4"
 	"go.uber.org/fx"
 	"go.uber.org/fx/fxtest"
 	"go.uber.org/zap"
