@@ -53,7 +53,7 @@ func TestModule(t *testing.T) {
 	type result struct {
 		fx.Out
 
-		Options []unit.Option `name:"unitOptions"`
+		Options []unit.Option `group:"unitOptions"`
 	}
 
 	unitDeps := func() result {
