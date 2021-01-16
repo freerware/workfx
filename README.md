@@ -72,3 +72,6 @@ Please check out our [code of conduct][code-of-conduct] to get up to speed how w
 [blog]: https://medium.com/@freerjm/work-units-ec2da48cf574
 [blog-img]: https://img.shields.io/badge/blog-medium-lightgrey
 [v4.0.0-beta]: https://github.com/freerware/workfx/releases/tag/v4.0.0-beta
+[modules-doc]: https://golang.org/doc/go1.11#modules
+[modules-wiki]: https://github.com/golang/go/wiki/Modules#releasing-modules-v2-or-higher
+[modules-release]: https://github.com/freerware/workfx/releases/tag/v4.0.0-beta
