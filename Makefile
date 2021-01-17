@@ -16,7 +16,7 @@ bins:
 test: bins
 	@echo testing...
 	@#v1 + v2
-	@GO111MODULE=on go test -v -race -covermode=atomic -coverprofile=coverage.out github.com/freerware/workfx
+	@GO111MODULE=on go test -v -race -covermode=atomic -coverprofile=workfx.coverprofile github.com/freerware/workfx
 	@#v4
-	@cd ./v4 && GO111MODULE=on go test -v -race -covermode=atomic -coverprofile=coverage.out github.com/freerware/workfx/v4 && cd ..
+	@cd ./v4 && GO111MODULE=on go test -v -race -covermode=atomic -coverprofile=workfx.coverprofile github.com/freerware/workfx/v4 && cd ..
 	@echo done!
