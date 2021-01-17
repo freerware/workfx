@@ -7,6 +7,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/freerware/work v2.0.1+incompatible
 	github.com/freerware/workfx v2.0.1+incompatible // indirect
+	github.com/modocache/gover v0.0.0-20171022184752-b58185e213c5 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/stretchr/testify v1.4.0
 	github.com/uber-go/tally v3.3.11+incompatible
